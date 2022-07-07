@@ -14,11 +14,14 @@
         @Html.ActionLink("Home", "Index", "Home")
         @Html.ActionLink("Clients", "Index", "Clients")
         @Html.ActionLink("Brokerages", "Index", "Brokerages")
+    </header>
     <div>
         @RenderBody()
     </div>
     <footer>
-Footer
+        Footer
     </footer>
+
+    @RenderSection("scripts", required: false)
 </body>
 </html>

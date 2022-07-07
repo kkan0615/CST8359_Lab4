@@ -15,5 +15,8 @@ namespace Lab4.Models
         [DataType(DataType.Currency)]
         [Column(TypeName = "money")]
         public decimal Fee { get; set; }
+
+        public List<Subscription> Subscriptions { get; set; }
+
     }
 }

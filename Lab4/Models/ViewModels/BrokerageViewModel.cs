@@ -1,5 +1,5 @@
 ﻿namespace Lab4.Models.ViewModels
-{
+{ 
     public class BrokerageViewModel
     {
         public IEnumerable<Client> Clients { get; set; }

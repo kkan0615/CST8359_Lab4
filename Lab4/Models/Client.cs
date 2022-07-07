@@ -16,6 +16,7 @@ namespace Lab4.Models
         [Display(Name = "Birth Date")]
         public DateTime BirthDate { get; set; }
 
+        public List<Subscription> Subscriptions { get; set; }
         public string FullName()
         {
             return LastName + " " + FirstName;

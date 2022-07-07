@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Lab4.Data;
 using Lab4.Models;
+using Lab4.Models.ViewModels;
 
 namespace Lab4.Controllers
 {
@@ -20,9 +21,35 @@ namespace Lab4.Controllers
         }
 
         // GET: Brokerages
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string? Id)
         {
-              return View(await _context.Brokerages.ToListAsync());
+            var viewModel = new BrokerageViewModel
+            { 
+                Brokerages = await _context.Brokerages
+                .Include(i => i.Subscriptions)
+                .AsNoTracking()
+                .OrderBy(i => i.Id)
+                .ToListAsync()
+            };
+
+            if (Id != null)
+            {
+                ViewData["BrokerageId"] = Id;
+                viewModel.Subscriptions = await _context.Subscriptions
+                .Include(i => i.Client)
+                .Include(i => i.Brokerage)
+                .Where(i => i.BrokerageId == Id)
+                .AsNoTracking()
+                .ToListAsync();
+                /*viewModel.Clients = await _context.Clients
+                .Include(i => i.Subscriptions)
+                .Where(i => i.Subscriptions.Contains == Id)
+                .AsNoTracking()
+                .OrderBy(i => i.Id)
+                .ToListAsync();*/
+            }
+
+            return View(viewModel);
         }
 
         // GET: Brokerages/Details/5
